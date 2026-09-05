@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Krista Agustin | Portfolio</title>
+
+    <style>
+        /* Main page styling */
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            color: #1a1a1a;
+        }
+
+        /* Header */
+        header {
+            background-color: #0d3b24;
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            border-bottom: 5px solid silver;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        /* Magical-style welcome message */
+        #welcomeMessage {
+            font-family: "Copperplate", "Papyrus", fantasy;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: silver;
+            text-shadow: 2px 2px 3px black;
+            margin-top: 15px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #111111;
+            text-align: center;
+            padding: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: silver;
+        }
+
+        /* Main content */
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            background-color: white;
+            margin: 25px 0;
+            padding: 25px;
+            border-left: 6px solid #0d3b24;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px #aaaaaa;
+        }
+
+        h2 {
+            color: #0d3b24;
+            border-bottom: 2px solid silver;
+            padding-bottom: 8px;
+        }
+
+        /* Project cards */
+        .projects {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .project-card {
+            flex: 1;
+            min-width: 200px;
+            background-color: #e5e5e5;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid silver;
+            border-radius: 5px;
+        }
+
+        .project-card a {
+            color: #0d3b24;
+            font-weight: bold;
+        }
+
+        /* Contact form */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            padding: 10px;
+            border: 1px solid #888888;
+            border-radius: 4px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        textarea {
+            height: 120px;
+        }
+
+        button {
+            margin-top: 18px;
+            padding: 12px;
+            background-color: #0d3b24;
+            color: white;
+            border: 2px solid silver;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #111111;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111111;
+            color: silver;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Krista Agustin</h1>
+
+        <!-- JavaScript will personalize this message -->
+        <div id="welcomeMessage">Welcome to My Portfolio</div>
+    </header>
+
+    <!-- Navigation menu -->
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+
+            <p>
+                Hi! I'm Krista, an Information Technology student at ECPI University
+                specializing in Data Analytics. I'm especially interested in using
+                technology and data in the pet industry, including pet programs,
+                promotions, merchandising, buying, and selling.
+            </p>
+
+            <p>
+                I'm interested in how data can help businesses make decisions about
+                products, promotions, customer loyalty, and inventory. This portfolio
+                will showcase the projects and skills I develop throughout my program.
+            </p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Projects</h2>
+
+            <p>
+                As I continue building my portfolio, I will add projects that
+                demonstrate the skills I develop throughout my program.
+            </p>
+
+            <div class="projects">
+
+                <div class="project-card">
+                    <h3>Project One</h3>
+                    <p>Future data analytics project.</p>
+                    <a href="#">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project Two</h3>
+                    <p>Future merchandising or product data project.</p>
+                    <a href="#">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <h3>Project Three</h3>
+                    <p>Future promotions or customer data project.</p>
+                    <a href="#">View Project</a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact</h2>
+
+            <form>
+                <label for="senderName">Name:</label>
+                <input type="text" id="senderName" name="senderName">
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email">
+
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject">
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message"></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Krista Agustin | Information Technology - Data Analytics</p>
+    </footer>
+
+    <script>
+        // Prompt the visitor for their name
+        let visitorName = prompt("What is your name?");
+
+        // Personalize the welcome message
+        if (visitorName) {
+            document.getElementById("welcomeMessage").innerText =
+                "Welcome, " + visitorName + "!";
+        }
+    </script>
+
+</body>
+
+</html>

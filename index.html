@@ -16,6 +16,47 @@
             color: #1a1a1a;
         }
 
+        /* Dark Mode control */
+        .dark-mode-control {
+            background-color: #111111;
+            color: white;
+            padding: 10px 20px;
+            text-align: right;
+        }
+
+        .dark-mode-control label {
+            margin-right: 8px;
+        }
+
+        /* Dark Mode styling */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        body.dark-mode section {
+            background-color: #2b2b2b;
+            color: white;
+        }
+
+        body.dark-mode h2 {
+            color: silver;
+        }
+
+        body.dark-mode .project-card {
+            background-color: #3a3a3a;
+            color: white;
+        }
+
+        body.dark-mode .featured-box {
+            background-color: #3a3a3a;
+            color: white;
+        }
+
+        body.dark-mode .featured-box a {
+            color: silver;
+        }
+
         /* Header */
         header {
             background-color: #0d3b24;
@@ -77,6 +118,35 @@
             color: #0d3b24;
             border-bottom: 2px solid silver;
             padding-bottom: 8px;
+        }
+
+        /* Featured Content */
+        .featured-content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .featured-box {
+            flex: 1;
+            min-width: 250px;
+            background-color: #e5e5e5;
+            padding: 20px;
+            border: 2px solid #0d3b24;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .featured-box a {
+            color: #0d3b24;
+            font-weight: bold;
+        }
+
+        .project-image {
+            width: 220px;
+            max-width: 100%;
+            border: 2px solid silver;
+            border-radius: 5px;
         }
 
         /* Project cards */
@@ -153,6 +223,12 @@
 
 <body>
 
+    <!-- Dark Mode toggle -->
+    <div class="dark-mode-control">
+        <label for="darkMode">Dark Mode</label>
+        <input type="checkbox" id="darkMode">
+    </div>
+
     <header>
         <h1>Krista Agustin</h1>
 
@@ -163,6 +239,7 @@
     <!-- Navigation menu -->
     <nav>
         <a href="#about">About</a>
+        <a href="#featured">Featured Content</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -185,6 +262,58 @@
                 products, promotions, customer loyalty, and inventory. This portfolio
                 will showcase the projects and skills I develop throughout my program.
             </p>
+
+            <h3>Skills and Technologies</h3>
+
+            <!-- JavaScript will add skills to this list -->
+            <ul id="skillsList"></ul>
+        </section>
+
+        <!-- Featured Content Section -->
+        <section id="featured">
+            <h2>Featured Content</h2>
+
+            <div class="featured-content">
+
+                <!-- University Resources -->
+                <div id="universityResources" class="featured-box">
+                    <h3>University Resources</h3>
+
+                    <p>
+                        Learn more about the Data Analytics program I am studying
+                        at ECPI University.
+                    </p>
+
+                    <a href="https://www.ecpi.edu/programs/data-analytics-bachelor-degree"
+                       target="_blank">
+                        ECPI Data Analytics Bachelor's Degree
+                    </a>
+                </div>
+
+                <!-- Personal Projects -->
+                <div id="personalProjects" class="featured-box">
+                    <h3>Personal Projects</h3>
+
+                    <p>Visit my JavaScript portfolio project:</p>
+
+                    <a href="https://krista7298.github.io/javascript-portfolio/"
+                       target="_blank">
+
+                        <img
+                            class="project-image"
+                            src="https://dummyimage.com/220x120/0d3b24/ffffff&text=JavaScript+Portfolio"
+                            alt="JavaScript Portfolio Project">
+                    </a>
+
+                    <p>
+                        <a href="https://github.com/krista7298/javascript-portfolio"
+                           target="_blank">
+                            View Repository on GitHub
+                        </a>
+                    </p>
+                </div>
+
+            </div>
         </section>
 
         <!-- Projects Section -->
@@ -236,7 +365,7 @@
                 <label for="message">Message:</label>
                 <textarea id="message" name="message"></textarea>
 
-                <button type="submit">Submit</button>
+                <button type="submit" id="submitButton">Submit</button>
             </form>
         </section>
 
@@ -255,6 +384,67 @@
             document.getElementById("welcomeMessage").innerText =
                 "Welcome, " + visitorName + "!";
         }
+
+        // Create an array of skills and display them using a loop
+        let skills = [
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Git",
+            "GitHub"
+        ];
+
+        let skillsList = document.getElementById("skillsList");
+
+        skills.forEach(function(skill) {
+            let listItem = document.createElement("li");
+            listItem.innerText = skill;
+            skillsList.appendChild(listItem);
+        });
+
+        // Determine which Featured Content divs should be displayed
+        let projectCount =
+            document.querySelectorAll(".project-card").length;
+
+        let universityResources =
+            document.getElementById("universityResources");
+
+        let personalProjects =
+            document.getElementById("personalProjects");
+
+        if (projectCount < 3) {
+            universityResources.style.display = "block";
+            personalProjects.style.display = "block";
+        } else {
+            universityResources.style.display = "none";
+            personalProjects.style.display = "block";
+        }
+
+        // Dark Mode toggle
+        let darkModeToggle = document.getElementById("darkMode");
+
+        darkModeToggle.addEventListener("change", function() {
+            if (darkModeToggle.checked) {
+                document.body.classList.add("dark-mode");
+            } else {
+                document.body.classList.remove("dark-mode");
+            }
+        });
+
+        // Contact form Submit button
+        let submitButton = document.getElementById("submitButton");
+
+        submitButton.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            let senderName =
+                document.getElementById("senderName").value;
+
+            alert(
+                "Thank you, " + senderName +
+                ", your message has been sent!"
+            );
+        });
     </script>
 
 </body>

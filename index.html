@@ -171,6 +171,20 @@
             font-weight: bold;
         }
 
+        /* Dynamically added project message */
+        .project-message {
+            padding: 12px;
+            margin-top: 20px;
+            border: 2px solid silver;
+            border-radius: 4px;
+            background-color: #eeeeee;
+        }
+
+        body.dark-mode .project-message {
+            background-color: #3a3a3a;
+            color: white;
+        }
+
         /* Contact form */
         form {
             display: flex;
@@ -208,6 +222,17 @@
 
         button:hover {
             background-color: #111111;
+        }
+
+        /* Contact form status message */
+        #formStatus {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #0d3b24;
+        }
+
+        body.dark-mode #formStatus {
+            color: silver;
         }
 
         /* Footer */
@@ -352,7 +377,7 @@
         <section id="contact">
             <h2>Contact</h2>
 
-            <form>
+            <form id="contactForm">
                 <label for="senderName">Name:</label>
                 <input type="text" id="senderName" name="senderName">
 
@@ -431,20 +456,65 @@
             }
         });
 
-        // Contact form Submit button
-        let submitButton = document.getElementById("submitButton");
+        /*
+            NEW DOM REQUIREMENT:
+            Dynamically create a message and append it to the Projects section.
+        */
+        let projectsSection = document.getElementById("projects");
 
-        submitButton.addEventListener("click", function(event) {
+        let projectMessage = document.createElement("p");
+
+        projectMessage.textContent =
+            "New projects will be added as I continue developing my JavaScript and data analytics skills.";
+
+        projectMessage.classList.add("project-message");
+
+        projectsSection.appendChild(projectMessage);
+
+        /*
+            SELECTOR REQUIREMENT:
+            Select and modify two existing elements on the page.
+        */
+        let projectsHeading = document.querySelector("#projects h2");
+        projectsHeading.textContent = "My Projects";
+
+        let contactHeading = document.getElementById("contact")
+            .querySelector("h2");
+        contactHeading.textContent = "Contact Me";
+
+        /*
+            TIMING FUNCTION REQUIREMENT:
+            Prevent the normal form submission, dynamically display a
+            sending message, and replace it with a confirmation after
+            a 2.5 second delay.
+        */
+        let contactForm = document.getElementById("contactForm");
+
+        contactForm.addEventListener("submit", function(event) {
+
+            // Prevent the form from submitting normally
             event.preventDefault();
 
-            let senderName =
-                document.getElementById("senderName").value;
+            // Remove an old status message if one already exists
+            let oldStatus = document.getElementById("formStatus");
 
-            alert(
-                "Thank you, " + senderName +
-                ", your message has been sent!"
-            );
+            if (oldStatus) {
+                oldStatus.remove();
+            }
+
+            // Dynamically create the sending message
+            let formStatus = document.createElement("p");
+            formStatus.id = "formStatus";
+            formStatus.textContent = "Sending message...";
+
+            contactForm.appendChild(formStatus);
+
+            // Replace the sending message after 2.5 seconds
+            setTimeout(function() {
+                formStatus.textContent = "Message sent successfully!";
+            }, 2500);
         });
+
     </script>
 
 </body>

@@ -224,6 +224,38 @@
             background-color: #111111;
         }
 
+        /* Tooltip for Contact form Submit button */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            background-color: #111111;
+            color: white;
+            text-align: center;
+            padding: 7px 10px;
+            border-radius: 4px;
+            position: absolute;
+            z-index: 2;
+            bottom: 105%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip #submitButton {
+            width: 100%;
+        }
+
         /* Contact form status message */
         #formStatus {
             margin-top: 15px;
@@ -233,6 +265,41 @@
 
         body.dark-mode #formStatus {
             color: silver;
+        }
+
+        /* Opening modal and transparent page overlay */
+        .modal-overlay {
+            display: flex;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            color: #1a1a1a;
+            width: 80%;
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+            border: 4px solid #0d3b24;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px black;
+        }
+
+        .modal-content h2 {
+            color: #0d3b24;
+            margin-top: 0;
+        }
+
+        .modal-content button {
+            width: 120px;
         }
 
         /* Footer */
@@ -248,6 +315,15 @@
 
 <body>
 
+    <!-- Modal that appears when the page loads -->
+    <div id="welcomeModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Welcome!</h2>
+            <p>This page is a work in progress.</p>
+            <button type="button" id="closeModal">Close</button>
+        </div>
+    </div>
+
     <!-- Dark Mode toggle -->
     <div class="dark-mode-control">
         <label for="darkMode">Dark Mode</label>
@@ -257,7 +333,6 @@
     <header>
         <h1>Krista Agustin</h1>
 
-        <!-- JavaScript will personalize this message -->
         <div id="welcomeMessage">Welcome to My Portfolio</div>
     </header>
 
@@ -390,7 +465,11 @@
                 <label for="message">Message:</label>
                 <textarea id="message" name="message"></textarea>
 
-                <button type="submit" id="submitButton">Submit</button>
+                <!-- Tooltip appears when the user hovers over Submit -->
+                <div class="tooltip">
+                    <button type="submit" id="submitButton">Submit</button>
+                    <span class="tooltip-text">Click to send your message!</span>
+                </div>
             </form>
         </section>
 
@@ -401,14 +480,17 @@
     </footer>
 
     <script>
-        // Prompt the visitor for their name
-        let visitorName = prompt("What is your name?");
+        /*
+            OPENING MODAL:
+            The modal appears automatically when the page loads.
+            Clicking the Close button hides the modal.
+        */
+        let welcomeModal = document.getElementById("welcomeModal");
+        let closeModalButton = document.getElementById("closeModal");
 
-        // Personalize the welcome message
-        if (visitorName) {
-            document.getElementById("welcomeMessage").innerText =
-                "Welcome, " + visitorName + "!";
-        }
+        closeModalButton.addEventListener("click", function() {
+            welcomeModal.style.display = "none";
+        });
 
         // Create an array of skills and display them using a loop
         let skills = [
@@ -445,19 +527,38 @@
             personalProjects.style.display = "block";
         }
 
-        // Dark Mode toggle
+        /*
+            DARK MODE PERSISTENCE:
+            Check localStorage when the page loads and apply the
+            user's previously saved Dark Mode preference.
+        */
         let darkModeToggle = document.getElementById("darkMode");
+        let savedDarkMode = localStorage.getItem("darkMode");
 
+        if (savedDarkMode === "enabled") {
+            document.body.classList.add("dark-mode");
+            darkModeToggle.checked = true;
+        } else {
+            document.body.classList.remove("dark-mode");
+            darkModeToggle.checked = false;
+        }
+
+        /*
+            Save the user's Dark Mode preference in localStorage
+            whenever the toggle is changed.
+        */
         darkModeToggle.addEventListener("change", function() {
             if (darkModeToggle.checked) {
                 document.body.classList.add("dark-mode");
+                localStorage.setItem("darkMode", "enabled");
             } else {
                 document.body.classList.remove("dark-mode");
+                localStorage.setItem("darkMode", "disabled");
             }
         });
 
         /*
-            NEW DOM REQUIREMENT:
+            DOM REQUIREMENT FROM PREVIOUS PROJECT:
             Dynamically create a message and append it to the Projects section.
         */
         let projectsSection = document.getElementById("projects");
@@ -472,7 +573,7 @@
         projectsSection.appendChild(projectMessage);
 
         /*
-            SELECTOR REQUIREMENT:
+            SELECTOR REQUIREMENT FROM PREVIOUS PROJECT:
             Select and modify two existing elements on the page.
         */
         let projectsHeading = document.querySelector("#projects h2");
@@ -483,7 +584,7 @@
         contactHeading.textContent = "Contact Me";
 
         /*
-            TIMING FUNCTION REQUIREMENT:
+            TIMING FUNCTION REQUIREMENT FROM PREVIOUS PROJECT:
             Prevent the normal form submission, dynamically display a
             sending message, and replace it with a confirmation after
             a 2.5 second delay.

@@ -57,6 +57,10 @@
             color: silver;
         }
 
+        body.dark-mode .project-card a {
+            color: silver;
+        }
+
         /* Header */
         header {
             background-color: #0d3b24;
@@ -332,7 +336,6 @@
 
     <header>
         <h1>Krista Agustin</h1>
-
         <div id="welcomeMessage">Welcome to My Portfolio</div>
     </header>
 
@@ -365,7 +368,7 @@
 
             <h3>Skills and Technologies</h3>
 
-            <!-- JavaScript will add skills to this list -->
+            <!-- JavaScript will dynamically add five skills to this list -->
             <ul id="skillsList"></ul>
         </section>
 
@@ -421,31 +424,12 @@
             <h2>Projects</h2>
 
             <p>
-                As I continue building my portfolio, I will add projects that
-                demonstrate the skills I develop throughout my program.
+                These projects demonstrate JavaScript skills and features
+                I have developed while building my portfolio.
             </p>
 
-            <div class="projects">
-
-                <div class="project-card">
-                    <h3>Project One</h3>
-                    <p>Future data analytics project.</p>
-                    <a href="#">View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <h3>Project Two</h3>
-                    <p>Future merchandising or product data project.</p>
-                    <a href="#">View Project</a>
-                </div>
-
-                <div class="project-card">
-                    <h3>Project Three</h3>
-                    <p>Future promotions or customer data project.</p>
-                    <a href="#">View Project</a>
-                </div>
-
-            </div>
+            <!-- Project objects will be dynamically rendered here -->
+            <div class="projects" id="projectList"></div>
         </section>
 
         <!-- Contact Section -->
@@ -492,7 +476,96 @@
             welcomeModal.style.display = "none";
         });
 
-        // Create an array of skills and display them using a loop
+        /*
+            SCALABLE PROJECT OBJECTS:
+            These objects store the title, summary, image URL,
+            and repository link for three portfolio projects.
+        */
+        let portfolioProject = {
+            title: "JavaScript Portfolio",
+            summary: "A portfolio website created to demonstrate my growing HTML, CSS, and JavaScript skills. It includes interactive features and dynamically generated content.",
+            image: "https://dummyimage.com/220x120/0d3b24/ffffff&text=JavaScript+Portfolio",
+            repository: "https://github.com/krista7298/javascript-portfolio"
+        };
+
+        let domProject = {
+            title: "Interactive DOM Features",
+            summary: "JavaScript DOM features that dynamically modify page content and create interactive elements. This project demonstrates selectors, events, and dynamically created elements.",
+            image: "https://dummyimage.com/220x120/0d3b24/ffffff&text=DOM+Features",
+            repository: "https://github.com/krista7298/javascript-portfolio"
+        };
+
+        let storageProject = {
+            title: "Persistent Storage Features",
+            summary: "JavaScript storage features that save and retrieve information in the browser. This project demonstrates localStorage, sessionStorage, JSON, and saved user preferences.",
+            image: "https://dummyimage.com/220x120/0d3b24/ffffff&text=Storage+Features",
+            repository: "https://github.com/krista7298/javascript-portfolio"
+        };
+
+        // Store the three custom project objects in an array
+        let projectArray = [
+            portfolioProject,
+            domProject,
+            storageProject
+        ];
+
+        /*
+            SESSION STORAGE:
+            Check whether project data already exists in sessionStorage.
+            If not, convert the project array to a JSON string and store it.
+            If it exists, retrieve it and convert it back into an array.
+        */
+        let storedProjects = sessionStorage.getItem("portfolioProjects");
+
+        if (storedProjects === null) {
+            sessionStorage.setItem(
+                "portfolioProjects",
+                JSON.stringify(projectArray)
+            );
+        } else {
+            projectArray = JSON.parse(storedProjects);
+        }
+
+        /*
+            DYNAMIC PROJECT RENDERING:
+            Loop through the project array and create the image,
+            title, summary, and repository link for each project.
+        */
+        let projectList = document.getElementById("projectList");
+
+        projectArray.forEach(function(project) {
+            let projectCard = document.createElement("div");
+            projectCard.classList.add("project-card");
+
+            let projectImage = document.createElement("img");
+            projectImage.src = project.image;
+            projectImage.alt = project.title;
+            projectImage.classList.add("project-image");
+
+            let projectTitle = document.createElement("h3");
+            projectTitle.textContent = project.title;
+
+            let projectSummary = document.createElement("p");
+            projectSummary.textContent = project.summary;
+
+            let projectLink = document.createElement("a");
+            projectLink.href = project.repository;
+            projectLink.target = "_blank";
+            projectLink.textContent = "View Repository";
+
+            projectCard.appendChild(projectImage);
+            projectCard.appendChild(projectTitle);
+            projectCard.appendChild(projectSummary);
+            projectCard.appendChild(projectLink);
+
+            projectList.appendChild(projectCard);
+        });
+
+        /*
+            DYNAMIC SKILLS:
+            Create an array containing at least five technologies
+            and dynamically display each one with a loop.
+        */
         let skills = [
             "HTML",
             "CSS",
